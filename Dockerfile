@@ -1,4 +1,4 @@
-FROM golang:1.14 AS build-env
+FROM golang:1.18 AS build-env
 
 MAINTAINER Mei Akizuru
 
@@ -12,7 +12,7 @@ RUN go mod download
 
 # copy other sources & build
 COPY . /go/src/app
-RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o /go/bin/app
+RUN GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o /go/bin/app
 
 FROM alpine:3.11 AS runtime-env
 COPY --from=build-env /go/bin/app /usr/local/bin/app
